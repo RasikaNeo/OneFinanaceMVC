@@ -1,0 +1,84 @@
+﻿@model OneFinanaceMVC.Models.AddProductDto
+
+@{
+    ViewData["Title"] = "AddProduct";
+}
+
+
+<h1 style="padding-left: 420px;">Add Product</h1>
+
+
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-4 border rounded p-4">
+        <form asp-action="AddProduct" method="post" class="needs-validation" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" required pattern="[0-9]+(\.[0-9][0-9]?)?" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryName" class="control-label">Category Name</label>
+                <select asp-for="CategoryName" class="form-control" asp-items="Html.GetEnumSelectList<CategoryEnum>()">
+                    <option value="" selected>Choose Category</option>
+                </select>
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+        <script>
+            // Disable form submission if fields are invalid
+            (function () {
+                'use strict';
+
+                window.addEventListener('load', function () {
+                    var forms = document.getElementsByClassName('needs-validation');
+
+                    Array.prototype.filter.call(forms, function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+
+                // Numeric validation for the price field
+                $('#price').on('input', function () {
+                    this.value = this.value.replace(/[^0-9.]/g, ''); // Allow only numbers and decimal point
+                });
+            })();
+        </script>
+    </div>
+</div>
+
+<div>
+    <a asp-action="GetAllProduct">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+   
+}

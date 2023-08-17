@@ -1,0 +1,80 @@
+﻿@model IEnumerable<OneFinanaceMVC.Models.GetAllProduct>
+
+@{
+    ViewData["Title"] = "GetAllProduct";
+}
+
+<script src="https://cdn.datatables.net/1.11.8/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.8/css/jquery.dataTables.min.css" />
+
+<style>
+    
+    
+
+    .table th {
+        text-align: center;
+        background-color: #5dacac;
+    }
+
+
+    .table td {
+        text-align: center;
+
+    }
+
+    .my-4 {
+        font-size: 30px;
+        font-weight: 600;
+        padding-left: 350px;
+        text-decoration: underline;
+    }
+</style>
+<div class="container">
+    <h1 class="my-4">Products</h1>
+
+    <div class="text-end mb-3">
+        <a class="btn btn-primary" asp-action="AddProduct">Create New</a>
+    </div>
+
+    <table class="table  table-bordered dt-responsive nowrap" id="productTable">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>
+                        <a class="btn btn-outline-primary btn-sm" asp-action="EditProduct" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-outline-secondary btn-sm" asp-action="DetailsProduct" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-outline-danger btn-sm" asp-action="DeleteProduct" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $('#productTable').DataTable();
+            });
+        </script>
+    }
+
+</div>
+
+
+
